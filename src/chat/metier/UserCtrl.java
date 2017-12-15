@@ -1,39 +1,57 @@
 package chat.metier;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import chat.entites.Utilisateur;
 
 public class UserCtrl implements IUserMetier {
-
+	
+	private Map<Integer, Utilisateur> users = new HashMap<Integer,Utilisateur>();
+	
 	@Override
-	public Utilisateur addUser(Utilisateur u) {
+	public boolean addUser(Utilisateur user) {
+		if(user != null){
+			users.put(user.getId(),user);
+			return true;
+		}else{
+			return false;
+		}
 		
-		return null;
 	}
 
 	@Override
-	public Utilisateur updateUser(Utilisateur u) {
+	public boolean updateUser(Utilisateur user) {
+		Utilisateur u = users.get(user.getId());
+		if(u != null){
+			users.remove(u.getId());
+			users.put(user.getId(), user);
+			return true;
+		}else{
+			return false;
+		}
 		
-		return null;
 	}
 
 	@Override
-	public List<Utilisateur> getUsers() {
+	public Map<Integer,Utilisateur> getUsers() {
 		
-		return null;
+		return  users;
 	}
 
 	@Override
 	public Utilisateur getUserById(int id) {
-		
-		return null;
+	
+		return users.get(id);
 	}
 
 	@Override
 	public boolean deleteUser(int id) {
-		
-		return false;
+		if(users.remove(id) != null )
+			return true;
+		else 
+			return false;
 	}
 
 }

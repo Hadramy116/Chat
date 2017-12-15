@@ -19,7 +19,7 @@ public class Message implements Serializable{
 			String dateRec) {
 		super();
 		this.id = id;
-		Content = content;
+		this.Content = content;
 		this.uSender = uSender;
 		this.uRecaver = uRecaver;
 		this.dateSend = dateSend;
