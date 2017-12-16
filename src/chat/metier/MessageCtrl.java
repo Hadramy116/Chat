@@ -53,4 +53,10 @@ public class MessageCtrl implements IMessageMetier {
 
 	}
 
+	@Override
+	public Message getLastMsg(int idUser) {
+		
+		return null;
+	}
+
 }

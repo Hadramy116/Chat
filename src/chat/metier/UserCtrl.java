@@ -8,7 +8,7 @@ import chat.entites.Utilisateur;
 
 public class UserCtrl implements IUserMetier {
 	
-	private Map<Integer, Utilisateur> users = new HashMap<Integer,Utilisateur>();
+	private static Map<Integer, Utilisateur> users = new HashMap<Integer,Utilisateur>();
 	
 	@Override
 	public boolean addUser(Utilisateur user) {
@@ -36,7 +36,6 @@ public class UserCtrl implements IUserMetier {
 
 	@Override
 	public Map<Integer,Utilisateur> getUsers() {
-		
 		return  users;
 	}
 

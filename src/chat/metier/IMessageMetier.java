@@ -8,9 +8,9 @@ public interface IMessageMetier {
 	
 	public boolean createMsg(Message msg);
 	public boolean deleteMessage(int id);
-
 	public Map<Integer, Message> getMessages();
 	public Map<Integer, Message> getUserMessages(int idSend ,int idR);
+	public Message getLastMsg(int idUser);
 	
 
 }
