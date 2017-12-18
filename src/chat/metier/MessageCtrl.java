@@ -7,7 +7,7 @@ import chat.entites.Message;
 
 public class MessageCtrl implements IMessageMetier {
 
-	private Map<Integer, Message> messages = new HashMap<Integer, Message>();
+	private static Map<Integer, Message> messages = new HashMap<Integer, Message>();
 
 	@Override
 	public boolean createMsg(Message msg) {
@@ -30,33 +30,37 @@ public class MessageCtrl implements IMessageMetier {
 	}
 
 	@Override
-	public Map<Integer, Message> getUserMessages(int idSend ,int idR) {
+	public Map<Integer, Message> getUserMessages(int idSend, int idR) {
 		Map<Integer, Message> userMsgs = new HashMap<Integer, Message>();
 
 		for (Message msg : messages.values()) {
-			
-			if (msg.getuSender().getId() == idSend && msg.getuRecaver().getId() == idR){
+
+			if (msg.getuSender() == idSend && msg.getuRecaver() == idR) {
 				userMsgs.put(idSend, msg);
 			}
-				
 
 		}
 		return userMsgs;
 
 	}
 
-	
-
 	public Map<Integer, Message> getMessages() {
 
 		return messages;
-
 	}
 
 	@Override
-	public Message getLastMsg(int idUser) {
-		
-		return null;
+	public Map<Integer, Message> getMsgNotReaded(int id) {
+
+		Map<Integer, Message> userMsgs = new HashMap<Integer, Message>();
+
+		for (Message msg : messages.values()) {
+
+			if (!msg.isVues() && msg.getuRecaver() == id) {
+				userMsgs.put(msg.getId(), msg);
+			}
+		}
+		return userMsgs;
 	}
 
 }

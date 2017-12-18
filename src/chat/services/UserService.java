@@ -1,5 +1,6 @@
 package chat.services;
 
+import java.util.Collection;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
@@ -21,11 +22,12 @@ import chat.metier.UserCtrl;
 @Produces("application/json")
 public class UserService {
 	
-	IUserMetier ctrl = new UserCtrl();
+	private IUserMetier ctrl = new UserCtrl();
+	
 	
 	@GET
-	public Map<Integer, Utilisateur> getUsers(){
-		return ctrl.getUsers();
+	public Collection<Utilisateur> getUsers(){
+		return ctrl.getUsers().values();
 	}
 	
 	@PUT
@@ -36,6 +38,7 @@ public class UserService {
 			return Response.status(204).entity(user).build();
 		}else{
 			return Response.status(204).entity("N'est pas ajouter !!").build();}
+		
 		
 	}
 	

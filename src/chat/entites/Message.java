@@ -1,29 +1,34 @@
 package chat.entites;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Message implements Serializable{
 	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer id;
-	private String Content;
-	private Utilisateur uSender;
-	private Utilisateur uRecaver;
+	private int uSender;
+	private int uRecaver;
 	private String dateSend;
-	private String dateRec;
+	private String msgContenu;
+	private boolean vues;
+	
 	
 	public Message() {
 		
 	}
 
-	public Message(Integer id, String content, Utilisateur uSender, Utilisateur uRecaver, String dateSend,
-			String dateRec) {
-		super();
+	public Message(Integer id, String content, int uSender, int uRecaver, boolean vues ) {
 		this.id = id;
-		this.Content = content;
+		this.msgContenu = content;
 		this.uSender = uSender;
 		this.uRecaver = uRecaver;
-		this.dateSend = dateSend;
-		this.dateRec = dateRec;
+		this.dateSend = new Date().toString();
+		this.vues = vues;
 	}
 
 	public Integer getId() {
@@ -34,27 +39,27 @@ public class Message implements Serializable{
 		this.id = id;
 	}
 
-	public String getContent() {
-		return Content;
+	public String getMsgContenu() {
+		return msgContenu;
 	}
 
-	public void setContent(String content) {
-		Content = content;
+	public void setMsgContenu(String content) {
+		msgContenu = content;
 	}
 
-	public Utilisateur getuSender() {
+	public int getuSender() {
 		return uSender;
 	}
 
-	public void setuSender(Utilisateur uSender) {
+	public void setuSender(int uSender) {
 		this.uSender = uSender;
 	}
 
-	public Utilisateur getuRecaver() {
+	public int getuRecaver() {
 		return uRecaver;
 	}
 
-	public void setuRecaver(Utilisateur uRecaver) {
+	public void setuRecaver(int uRecaver) {
 		this.uRecaver = uRecaver;
 	}
 
@@ -66,13 +71,14 @@ public class Message implements Serializable{
 		this.dateSend = dateSend;
 	}
 
-	public String getDateRec() {
-		return dateRec;
+	public boolean isVues() {
+		return vues;
 	}
 
-	public void setDateRec(String dateRec) {
-		this.dateRec = dateRec;
+	public void setVues(boolean vues) {
+		this.vues = vues;
 	}
+
 	
 	
 }

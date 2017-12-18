@@ -10,7 +10,7 @@ public interface IMessageMetier {
 	public boolean deleteMessage(int id);
 	public Map<Integer, Message> getMessages();
 	public Map<Integer, Message> getUserMessages(int idSend ,int idR);
-	public Message getLastMsg(int idUser);
+	public Map<Integer, Message> getMsgNotReaded(int id);
 	
 
 }
