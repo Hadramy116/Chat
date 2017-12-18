@@ -1,5 +1,6 @@
 package chat.metier;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,6 +62,21 @@ public class MessageCtrl implements IMessageMetier {
 			}
 		}
 		return userMsgs;
+	}
+
+	@Override
+	public Collection<Message> getUserConsult(int idUser) {
+
+		Map<Integer, Message> userMsgs = new HashMap<Integer, Message>();
+
+		for (Message msg : messages.values()) {
+
+			if (msg.getuRecaver() == idUser) {
+				userMsgs.put(msg.getId(), msg);
+			}
+		}
+		return userMsgs.values();
+
 	}
 
 }

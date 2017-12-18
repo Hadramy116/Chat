@@ -62,8 +62,16 @@ public class MessageService {
 	@GET
 	@Path("msgNonLu")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Map<Integer, Message> getMsgNotReaded(@QueryParam("id") int id) {
-		return ctrlM.getMsgNotReaded(id);
+	public Collection<Message> getMsgNotReaded(@QueryParam("id") int id) {
+		return ctrlM.getMsgNotReaded(id).values();
 	}
+	
+	@GET
+	@Path("userMsgConsult")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<Message> consulterMsg(@QueryParam("id") int id) {
+		return ctrlM.getUserConsult(id);
+	}
+	
 	
 }
