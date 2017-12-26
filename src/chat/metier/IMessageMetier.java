@@ -5,13 +5,10 @@ import java.util.Map;
 
 import chat.entites.Message;
 
-public interface IMessageMetier {
+public interface IMessageMetier extends IMetier<Message>{
 	
-	public boolean createMsg(Message msg);
-	public boolean deleteMessage(int id);
-	public Map<Integer, Message> getMessages();
-	public Map<Integer, Message> getUserMessages(int idSend ,int idR);//chat
-	public Map<Integer, Message> getMsgNotReaded(int id);
+	public Collection<Message> getUserMessages(int idSend ,int idR);//chat
+	public Collection<Message> getMsgNotReaded(int id);
 	public Collection<Message> getUserConsult(int idUser);
 	
 

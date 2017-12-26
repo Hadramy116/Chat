@@ -1,7 +1,6 @@
 package chat.services;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.Consumes;
@@ -15,8 +14,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import chat.entites.Message;
+import chat.entites.Utilisateur;
 import chat.metier.IMessageMetier;
-import chat.metier.IUserMetier;
+import chat.metier.IMetier;
+
 import chat.metier.MessageCtrl;
 import chat.metier.UserCtrl;
 
@@ -25,21 +26,21 @@ import chat.metier.UserCtrl;
 public class MessageService {
 	
 	private IMessageMetier ctrlM = new MessageCtrl();
-	private IUserMetier ctrlU = new UserCtrl();
+	private IMetier<Utilisateur> ctrlU = new UserCtrl();
 	
 	@GET
 	public Collection<Message> getMessages(){
-		return  ctrlM.getMessages().values();
+		return  ctrlM.getItems();
 	}
 	
 	@PUT
 	@Path("addMsg")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response creatMsg(Message msg){
-		if(ctrlU.getUserById(msg.getuRecaver()) == null)
-			return Response.status(204).entity("User not found").build();
+		if(ctrlU.getItemById(msg.getuRecaver()) == null || (msg.getuSender() == msg.getuRecaver()))
+			return Response.status(404).entity("User not found").build();
 		else
-			if(ctrlM.createMsg(msg))
+			if(ctrlM.add(msg))
 				return Response.status(204).entity(msg).build();
 			else
 				return Response.status(204).entity("Message n'est pas ajouter :(").build();
@@ -47,14 +48,14 @@ public class MessageService {
 	
 	@GET
 	@Path("chat")
-	public Map<Integer, Message> getUserMessages(@QueryParam("idUSend") int idUSend ,@QueryParam("idUR") int idUR){
+	public Collection<Message> getUserMessages(@QueryParam("idUSend") int idUSend ,@QueryParam("idUR") int idUR){
 		return ctrlM.getUserMessages(idUSend, idUR);
 	}
 	
 	@DELETE
 	@Path("deleteMsg")
 	public Response deleteMsg(@QueryParam("id") int id) {
-		if(ctrlM.deleteMessage(id))
+		if(ctrlM.delete(id))
 			return Response.status(204).entity("le message dont l'id "+id+" a ete suprimer").build();
 		else
 			return Response.status(204).entity("Rein a ete suprimer :(").build();
@@ -63,7 +64,7 @@ public class MessageService {
 	@Path("msgNonLu")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<Message> getMsgNotReaded(@QueryParam("id") int id) {
-		return ctrlM.getMsgNotReaded(id).values();
+		return ctrlM.getMsgNotReaded(id);
 	}
 	
 	@GET

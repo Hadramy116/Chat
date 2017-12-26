@@ -11,7 +11,7 @@ public class MessageCtrl implements IMessageMetier {
 	private static Map<Integer, Message> messages = new HashMap<Integer, Message>();
 
 	@Override
-	public boolean createMsg(Message msg) {
+	public boolean add(Message msg) {
 
 		if (msg != null) {
 			messages.put(msg.getId(), msg);
@@ -22,7 +22,7 @@ public class MessageCtrl implements IMessageMetier {
 	}
 
 	@Override
-	public boolean deleteMessage(int id) {
+	public boolean delete(Integer id) {
 
 		if (messages.remove(id) != null) {
 			return true;
@@ -31,27 +31,28 @@ public class MessageCtrl implements IMessageMetier {
 	}
 
 	@Override
-	public Map<Integer, Message> getUserMessages(int idSend, int idR) {
+	public Collection<Message> getUserMessages(int idSend, int idR) {
 		Map<Integer, Message> userMsgs = new HashMap<Integer, Message>();
 
 		for (Message msg : messages.values()) {
-
 			if (msg.getuSender() == idSend && msg.getuRecaver() == idR) {
 				userMsgs.put(idSend, msg);
 			}
-
+			if(msg.getuSender() == idR && msg.getuRecaver() == idSend){
+				userMsgs.put(idR, msg);
+			}
 		}
-		return userMsgs;
+		return userMsgs.values();
 
 	}
 
-	public Map<Integer, Message> getMessages() {
+	public Collection<Message> getItems() {
 
-		return messages;
+		return messages.values();
 	}
 
 	@Override
-	public Map<Integer, Message> getMsgNotReaded(int id) {
+	public Collection<Message> getMsgNotReaded(int id) {
 
 		Map<Integer, Message> userMsgs = new HashMap<Integer, Message>();
 
@@ -61,7 +62,7 @@ public class MessageCtrl implements IMessageMetier {
 				userMsgs.put(msg.getId(), msg);
 			}
 		}
-		return userMsgs;
+		return userMsgs.values();
 	}
 
 	@Override
@@ -77,6 +78,21 @@ public class MessageCtrl implements IMessageMetier {
 		}
 		return userMsgs.values();
 
+	}
+
+	@Override
+	public boolean update(Message item) {
+		if (messages.replace(item.getId(), item) != null ) {
+			return true;
+		}else{
+			return false;
+		}
+		
+	}
+
+	@Override
+	public Message getItemById(Integer id) {
+		return messages.get(id);
 	}
 
 }
