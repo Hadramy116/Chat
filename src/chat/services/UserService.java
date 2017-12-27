@@ -23,7 +23,6 @@ public class UserService {
 	
 	private IMetier<Utilisateur> ctrl = new UserCtrl();
 	
-	
 	@GET
 	public Collection<Utilisateur> getUsers(){
 		return ctrl.getItems();

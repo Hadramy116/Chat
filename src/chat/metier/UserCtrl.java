@@ -1,5 +1,7 @@
 package chat.metier;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -11,9 +13,31 @@ public class UserCtrl implements IMetier<Utilisateur>  {
 	
 	private static Map<Integer, Utilisateur> users = new HashMap<Integer,Utilisateur>();
 	
+	public String cryptWithMD5(String pass){
+	    try {
+	    	MessageDigest md = MessageDigest.getInstance("MD5");
+	        byte[] passBytes = pass.getBytes();
+	        md.reset();
+	        byte[] digested = md.digest(passBytes);
+	        StringBuffer sb = new StringBuffer();
+	        for(int i=0;i<digested.length;i++){
+	            sb.append(Integer.toHexString(0xff & digested[i]));
+	        }
+	        return sb.toString();
+	    } catch (NoSuchAlgorithmException ex) {
+	        //Logger.getLogger(CryptWithMD5.class.getName()).log(Level.SEVERE, null, ex);
+	    	return pass;
+	    }
+	        
+
+
+	   }
+	
+	
 	@Override
 	public boolean add(Utilisateur user) {
 		if(user != null){
+			user.setPassword(cryptWithMD5(user.getPassword()));
 			users.put(user.getId(),user);
 			return true;
 		}else{
