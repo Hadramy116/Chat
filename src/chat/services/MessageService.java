@@ -37,7 +37,7 @@ public class MessageService {
 	@Path("addMsg")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response creatMsg(Message msg){
-		if(ctrlU.getItemById(msg.getuRecaver()) == null || (msg.getuSender() == msg.getuRecaver()))
+		if(ctrlU.getItemById(msg.getuRecaver()) == null || (msg.getuSender() == msg.getuRecaver() ))
 			return Response.status(404).entity("User not found").build();
 		else
 			if(ctrlM.add(msg))

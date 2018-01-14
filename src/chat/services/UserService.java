@@ -15,13 +15,14 @@ import javax.ws.rs.core.Response;
 
 import chat.entites.Utilisateur;
 import chat.metier.IMetier;
+import chat.metier.IUser;
 import chat.metier.UserCtrl;
 
 @Path("users")
 @Produces("application/json")
 public class UserService {
 	
-	private IMetier<Utilisateur> ctrl = new UserCtrl();
+	private IUser ctrl = new UserCtrl();
 	
 	@GET
 	public Collection<Utilisateur> getUsers(){
@@ -58,6 +59,18 @@ public class UserService {
 		}else{
 			return Response.status(204).entity("Aucun element a ete suprimer !!").build();}
 		
+	}
+	
+	@GET
+	@Path("auth")
+	public Response auth(@QueryParam("name") String name , @QueryParam("pass") String pass){
+		
+		Utilisateur user = ctrl.auth(name, pass);
+		if(user != null){
+			return Response.status(204).entity(user).build();
+		}else{
+			return Response.status(204).entity(false).build();
+		}
 	}
 	
 }

@@ -1,2 +1,2 @@
-"# ChatProject" 
-# Chat Projet JEE jax-rs
+"# `Chat Service web`" 
+# Chat Projet JEE jax-rs `jersey` implementation

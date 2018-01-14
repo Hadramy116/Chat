@@ -9,7 +9,7 @@ import java.util.Map;
 
 import chat.entites.Utilisateur;
 
-public class UserCtrl implements IMetier<Utilisateur>  {
+public class UserCtrl implements IUser,IMetier<Utilisateur>  {
 	
 	private static Map<Integer, Utilisateur> users = new HashMap<Integer,Utilisateur>();
 	
@@ -28,10 +28,7 @@ public class UserCtrl implements IMetier<Utilisateur>  {
 	        //Logger.getLogger(CryptWithMD5.class.getName()).log(Level.SEVERE, null, ex);
 	    	return pass;
 	    }
-	        
-
-
-	   }
+	}
 	
 	
 	@Override
@@ -75,6 +72,21 @@ public class UserCtrl implements IMetier<Utilisateur>  {
 			return true;
 		else 
 			return false;
+	}
+	
+	@Override
+	public Utilisateur auth(String name , String pass){
+		
+		pass = cryptWithMD5(pass);
+		
+		for(Utilisateur user :users.values() ) {
+			
+			if(user.getName().equals(name) && user.getPassword().equals(pass)) {
+				return user;
+			}
+		}
+		
+		return null;
 	}
 
 }
