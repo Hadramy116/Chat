@@ -10,6 +10,15 @@ public class MessageCtrl implements IMessageMetier {
 
 	private static Map<Integer, Message> messages = new HashMap<Integer, Message>();
 	private static Map<Integer, Message>  userMsgs;
+	
+	public boolean isExist(Integer id){
+		
+		if(messages.get(id) != null){
+			return true;
+		}else{
+			return false;
+		}
+	}
 
 	@Override
 	public boolean add(Message msg) {
@@ -76,6 +85,8 @@ public class MessageCtrl implements IMessageMetier {
 		for (Message msg : messages.values()) {
 
 			if (msg.getuRecaver() == idUser) {
+				userMsgs.put(msg.getId(), msg);
+			}else if (msg.getuSender() == idUser){
 				userMsgs.put(msg.getId(), msg);
 			}
 		}

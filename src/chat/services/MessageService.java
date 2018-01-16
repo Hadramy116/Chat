@@ -45,7 +45,7 @@ public class MessageService {
 			else
 				return Response.status(204).entity("Message n'est pas ajouter :(").build();
 	}
-	
+	//uSender peut voir le messsage qui a envoiyer
 	@GET
 	@Path("chat")
 	public Collection<Message> getUserMessages(@QueryParam("idUSend") int idUSend ,@QueryParam("idUR") int idUR){

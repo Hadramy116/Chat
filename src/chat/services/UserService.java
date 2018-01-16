@@ -33,6 +33,7 @@ public class UserService {
 	@Path("addUser")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addUser(Utilisateur user){
+		//isExist
 		if(ctrl.add(user)){
 			return Response.status(204).entity(user).build();
 		}else{

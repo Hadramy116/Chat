@@ -30,13 +30,28 @@ public class UserCtrl implements IUser,IMetier<Utilisateur>  {
 	    }
 	}
 	
+	public boolean isExist(Integer id) {
+		
+		if(users.get(id) != null){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 	
 	@Override
 	public boolean add(Utilisateur user) {
+		
 		if(user != null){
 			user.setPassword(cryptWithMD5(user.getPassword()));
-			users.put(user.getId(),user);
-			return true;
+			
+			if(!isExist(user.getId())) {
+				users.put(user.getId(),user);
+				return true;
+			}else 
+				return false;
+					
 		}else{
 			return false;
 		}	
