@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -60,6 +61,22 @@ public class MessageService {
 		else
 			return Response.status(204).entity("Rein a ete suprimer :(").build();
 	}
+	
+	@POST
+	@Path("updateMsg")
+	public Response updateMsg(Message item) {
+		
+		if(ctrlM.isExist(item.getId())) {
+			if(ctrlM.update(item)){
+				return Response.status(204).entity("le message dont l'id "+item.getId()+" a ete modifier").build();
+			}else {
+				return Response.status(204).entity("Rein a ete modifier :(").build();
+			}
+		}else 
+			return Response.status(204).entity("Message n'exist pas ???!!").build();
+	}
+	
+	
 	@GET
 	@Path("msgNonLu")
 	@Produces(MediaType.APPLICATION_JSON)

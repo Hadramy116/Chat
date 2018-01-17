@@ -23,7 +23,7 @@ public class MessageCtrl implements IMessageMetier {
 	@Override
 	public boolean add(Message msg) {
 
-		if (msg != null) {
+		if (msg != null && !isExist(msg.getId())) {
 			messages.put(msg.getId(), msg);
 			return true;
 		} else {

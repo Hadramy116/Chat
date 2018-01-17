@@ -18,12 +18,16 @@ import chat.entites.Message;
 import chat.entites.Utilisateur;
 import chat.metier.GroupeCtrl;
 import chat.metier.IGroupe;
+import chat.metier.IUser;
+import chat.metier.UserCtrl;
 
 @Path("grps")
 @Produces("application/json")
 public class GroupeService {
 	
 	private IGroupe grpCtrl = new GroupeCtrl();
+	private IUser ctrlU = new UserCtrl();	
+		
 	
 	@GET
 	public Collection<Groupe> getGrps(){
@@ -60,7 +64,7 @@ public class GroupeService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addUserToGrp(Utilisateur user , @QueryParam("idGrp") Integer idGrp){
 		
-		if(grpCtrl.isExist(idGrp)){
+		if(grpCtrl.isExist(idGrp) && ctrlU.isExist(user.getId())){
 			if(grpCtrl.addToGroupe(user, idGrp))
 					return Response.status(204).entity(user).build();
 			else
@@ -99,6 +103,7 @@ public class GroupeService {
 	@Path("updateGrp")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response updateGrp(Groupe item) {
+		
 		if(grpCtrl.update(item))
 			return Response.status(204).entity("le groupe dont l'id "+item.getId()+" a ete modifier").build();
 		else
