@@ -94,7 +94,7 @@ public class GroupeCtrl implements IGroupe{
 
 	@Override
 	public Message addMsgToGroupe(Message msg , Integer idGrp) {
-		if(msgCtrl.isExist(msg.getId()) && isExist(idGrp)){
+		if(isExist(idGrp)){
 			grps.get(idGrp).getMsgs().add(msg);
 			return msg;
 		}else{
@@ -113,6 +113,19 @@ public class GroupeCtrl implements IGroupe{
 	public Collection<Utilisateur> getGrpUser(Integer id) {
 		
 		return grps.get(id).getUsers();
+	}
+
+	@Override
+	public boolean deleteUserFromGrp(Integer idUser, Integer idGrp) {
+		
+		if(userCtrl.isExist(idUser) && isExist(idGrp)){
+			if (grps.get(idGrp).getUsers().remove(idUser)) {
+				return true;
+			}else{
+				return false;
+			}
+		}
+		return false;
 	}
 
 }

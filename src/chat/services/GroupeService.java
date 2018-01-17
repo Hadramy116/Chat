@@ -106,5 +106,13 @@ public class GroupeService {
 	
 	}
 	
+	@DELETE
+	@Path("deleteUserFromGrp")
+	public Response deleteUserFromGrp(@QueryParam("idUser") Integer idUser , @QueryParam("idGrp") Integer idGrp) {
+		if(grpCtrl.deleteUserFromGrp(idUser, idGrp))
+			return Response.status(204).entity("User a ete suprimer").build();
+		else
+			return Response.status(204).entity("Rein a ete suprimer :(").build();
+	}
 
 }
